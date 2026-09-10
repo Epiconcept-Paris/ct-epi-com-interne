@@ -1,0 +1,25 @@
+# Livrables générés lors des essais (ne pas versionner)
+/com-interne-*.html
+/email*.html
+/out.*
+/test-*
+tmp/
+content_fr.html
+content_en.html
+signature.html
+header.html
+footer.html
+divider.html
+
+# Python / Node (essais locaux)
+__pycache__/
+*.pyc
+node_modules/
+package-lock.json
+
+# Paquets de release produits par le workflow
+*.zip
+
+# Éditeurs
+.DS_Store
+Thumbs.db

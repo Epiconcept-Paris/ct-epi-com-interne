@@ -1,0 +1,90 @@
+<!--
+  Snippets de bandeaux fallback Epiconcept
+  À utiliser quand l'utilisateur ne fournit pas d'image personnalisée.
+  Chaque snippet est un bloc HTML self-contained à coller directement dans
+  le template (placeholders {{HEADER_BANNER}} et {{FOOTER_BANNER}}).
+
+  Charte appliquée :
+    #4BCDDB — turquoise → fond bandeau HAUT et bandeau BAS (symétrie)
+    #246589 — bleu foncé → texte H1 dans le corps UNIQUEMENT
+    #FFFFFF — texte/logo sur les bandeaux turquoise
+    #434343 — corps de texte
+    #999999 — gris clair pour le footer copyright/adresse (petit)
+
+  Règle structurelle :
+    Le turquoise est réservé aux deux bandeaux (haut et bas).
+    Le corps du mail reste blanc, le footer copyright reste gris clair.
+
+  Logo :
+    Version blanche (silhouette du « e » sur fond transparent) utilisée
+    dans LES DEUX bandeaux, pour la lisibilité sur turquoise.
+-->
+
+<!-- ====================================================== -->
+<!-- BANDEAU HAUT — fallback turquoise + logo blanc + titre -->
+<!-- À substituer : {{TITLE_FOR_BANNER}} = titre court  -->
+<!-- ====================================================== -->
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#4BCDDB;">
+  <tr>
+    <td align="center" bgcolor="#4BCDDB" style="background-color:#4BCDDB; padding:40px 30px;">
+      <img src="data:image/png;base64,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" alt="Epiconcept" width="56" height="56" style="display:block; margin:0 auto 14px auto; border:0; outline:none;">
+      <h2 style="margin:0; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:30px; font-weight:700; color:#ffffff; line-height:1.2; text-align:center; letter-spacing:0.5px;">
+        {{TITLE_FOR_BANNER}}
+      </h2>
+      <div style="margin-top:8px; font-size:12px; color:#ffffff; opacity:0.85; letter-spacing:2px; text-transform:uppercase;">
+        Communication interne
+      </div>
+    </td>
+  </tr>
+</table>
+
+
+<!-- ====================================================== -->
+<!-- BANDEAU BAS — même turquoise que le haut + logo blanc  -->
+<!-- ====================================================== -->
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#4BCDDB;">
+  <tr>
+    <td align="center" bgcolor="#4BCDDB" style="background-color:#4BCDDB; padding:28px 30px;">
+      <img src="data:image/png;base64,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" alt="Epiconcept" width="44" height="44" style="display:block; margin:0 auto 10px auto; border:0; outline:none;">
+      <div style="font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:17px; font-weight:600; color:#ffffff; letter-spacing:0.5px;">
+        Epiconcept
+      </div>
+      <div style="margin-top:2px; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:11px; color:#ffffff; opacity:0.85; letter-spacing:3px; text-transform:uppercase;">
+        smart health
+      </div>
+    </td>
+  </tr>
+</table>
+
+
+<!-- ====================================================== -->
+<!-- VARIANTE BANDEAU HAUT — avec image fournie             -->
+<!-- À substituer : {{IMG_URL}}, {{ALT_TEXT}}       -->
+<!-- ====================================================== -->
+
+<img src="{{IMG_URL}}" alt="{{ALT_TEXT}}" width="600" style="display:block; width:100%; max-width:600px; height:auto; border:0; outline:none;">
+
+
+<!-- ====================================================== -->
+<!-- VARIANTE BANDEAU BAS — avec image fournie              -->
+<!-- ====================================================== -->
+
+<img src="{{IMG_URL}}" alt="{{ALT_TEXT}}" width="600" style="display:block; width:100%; max-width:600px; height:auto; border:0; outline:none;">
+
+
+<!-- ====================================================== -->
+<!-- DIVIDER FR / EN (à insérer entre les deux versions)    -->
+<!-- ====================================================== -->
+
+<tr>
+  <td align="center" style="padding:30px 30px 10px 30px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="border-top:2px solid #4BCDDB; height:1px; line-height:1px; font-size:0;">&nbsp;</td>
+      </tr>
+    </table>
+    <div style="margin-top:10px; font-size:14px; color:#246589; font-weight:600;">🇬🇧 English version</div>
+  </td>
+</tr>

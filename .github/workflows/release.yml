@@ -1,0 +1,25 @@
+name: Empaqueter la skill pour Claude AI
+
+# À chaque publication d'une release GitHub, cette action crée un .zip du dossier skill/
+# prêt à être chargé dans Claude AI, et l'attache à la release.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write   # nécessaire pour téléverser l'asset sur la release
+
+jobs:
+  package-skill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Créer le zip du dossier skill/
+        run: zip -r skill.zip skill -x '*/__pycache__/*' '*.pyc' '*/node_modules/*'
+
+      - name: Attacher le zip à la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" skill.zip --clobber
