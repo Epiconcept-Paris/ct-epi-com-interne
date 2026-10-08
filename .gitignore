@@ -1,9 +1,15 @@
-# Livrables générés lors des essais (ne pas versionner)
+# Livrables générés lors des essais (ne pas versionner — le livrable est la skill)
 /com-interne-*.html
 /email*.html
-/out.*
-/test-*
+/*.html
+/*.png
+/outputs/
+out.*
+test-*
 tmp/
+
+# Fragments temporaires de l'assemblage (cf. D-001, D-007) : ils portent du contenu de
+# communication réel et n'ont rien à faire dans le dépôt du gabarit.
 content_fr.html
 content_en.html
 signature.html
@@ -11,15 +17,21 @@ header.html
 footer.html
 divider.html
 
-# Python / Node (essais locaux)
+# Python (générateurs, validateurs — garder même sans dépendance : des essais arrivent)
 __pycache__/
 *.pyc
+.venv/
+venv/
+
+# Node (idem)
 node_modules/
 package-lock.json
 
-# Paquets de release produits par le workflow
-*.zip
-
-# Éditeurs
+# Système / éditeurs
 .DS_Store
 Thumbs.db
+*~
+.*.swp
+
+# Paquets de release produits par le workflow
+*.zip

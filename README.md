@@ -40,15 +40,18 @@ ct-epi-com-interne/
 ├── README.md                      ← ce fichier
 ├── CHANGELOG.md                   ← historique des versions du gabarit
 ├── CLAUDE.md                      ← consignes de travail pour Claude Code sur ce dépôt
-├── documentation/                 ← documentation de référence (hors skill)
+├── docs/                          ← documentation de référence (hors skill)
 │   ├── PREREQUIS_TECHNIQUES.md      ← environnement, assemblage local, contrôles de rendu
 │   ├── MAINTENANCE_GABARIT.md       ← où modifier quoi quand le gabarit évolue
-│   └── adr/                         ← décisions structurantes, convention D-NNN
+│   └── decisions/                   ← décisions structurantes, convention D-NNN
 │       ├── README.md                  ← index des ADR + patterns inscrits
 │       ├── adr-guide.md               ← méthodologie (quand/comment ouvrir un ADR)
 │       ├── _template_*.md             ← cadrage / closure / amendement
-│       └── D-001…D-012.md             ← les décisions
-└── skill/                         ← la skill Claude (à uploader dans Claude AI)
+│       └── D-001…D-013.md             ← les décisions
+├── tests/
+│   ├── tests_unitaires/             ← tests pytest des scripts (vide : la skill n'a pas de code)
+│   └── empirical_tests/             ← tests à jouer à la main : non-régression du comportement
+└── skill/                         ← la skill Claude (seul dossier embarqué dans le zip de release)
     ├── SKILL.md                     ← workflow, règles de couleur, contraintes Gmail
     ├── assets/
     │   ├── template.html            ← gabarit HTML à placeholders {{…}}
@@ -60,8 +63,8 @@ ct-epi-com-interne/
         └── editorial-patterns.md    ← ton, structure, emoji-ancres, sujets, interdits
 ```
 
-> La skill est **autonome** : elle ne dépend pas de `documentation/`. Ces éléments sont fournis
-> dans le dépôt à titre de référence et de maintenance.
+> La skill est **autonome** : elle ne dépend ni de `docs/` ni de `tests/`. Ces éléments sont
+> fournis dans le dépôt à titre de référence et de maintenance.
 
 ## Prérequis
 
@@ -69,7 +72,7 @@ ct-epi-com-interne/
   un shell (`bash_tool`) avec `awk` / `sed` / `python3`, lit les assets depuis
   `/mnt/skills/user/epi-com-interne/`, travaille dans `/home/claude/` et livre dans
   `/mnt/user-data/outputs/`. Hors de Claude AI, la skill fonctionne en mode dégradé —
-  transposition dans `documentation/PREREQUIS_TECHNIQUES.md`.
+  transposition dans `docs/PREREQUIS_TECHNIQUES.md`.
 - **Aucun ESP, aucune dépendance externe** : ni Mailchimp, ni CDN, ni police web. Le `.html`
   produit est self-contained (logos en data URI).
 - Pour la relecture : un navigateur, et **Gmail** pour le contrôle réel — c'est la cible.
@@ -104,6 +107,6 @@ Direction). Elle n'est pas destinée aux :
   contrainte Gmail autant que choix de sobriété.
 - Les logos sont des **actifs de marque Epiconcept** : usage interne, pas de redistribution hors
   de l'entreprise. La palette et le logo « e » officiel font autorité dans `ct-epi-visual` — voir
-  `documentation/MAINTENANCE_GABARIT.md`.
+  `docs/MAINTENANCE_GABARIT.md`.
 - Une com interne peut viser une population entière : relire la liste de diffusion et le contenu
   avant envoi. La skill produit le fichier, elle n'envoie rien.

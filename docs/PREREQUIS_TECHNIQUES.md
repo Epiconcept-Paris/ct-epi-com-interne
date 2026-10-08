@@ -8,7 +8,7 @@ dépendance externe, aucun ESP, aucune police web.
 
 | Besoin | Dépendance | Obligatoire ? | Sans elle |
 |--------|-----------|---------------|-----------|
-| Assemblage du HTML | un shell avec `awk`, `sed`, `python3` | **oui** | il faudrait réécrire le HTML complet, donc les blobs base64 — interdit ([D-007](adr/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md)) |
+| Assemblage du HTML | un shell avec `awk`, `sed`, `python3` | **oui** | il faudrait réécrire le HTML complet, donc les blobs base64 — interdit ([D-007](decisions/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md)) |
 | Questions de cadrage | outil `ask_user_input_v0` | non | poser les questions en conversation, en un seul message |
 | Livraison du fichier | outil `present_files` | non | livrer par le mécanisme de l'hôte |
 | Contrôle de rendu | un navigateur **et** Gmail | **oui** en pratique | aucun contrôle : il n'existe pas de validateur |
@@ -20,7 +20,7 @@ dans les snippets.
 ## Environnement d'exécution
 
 L'assemblage suppose un système de fichiers et un shell. Les chemins de `skill/SKILL.md` visent
-**Claude AI** ([D-012](adr/D-012-environnement-cible-claude-ai.md)) :
+**Claude AI** ([D-012](decisions/D-012-environnement-cible-claude-ai.md)) :
 
 | Ligne | Chemin / outil | Rôle |
 |-------|----------------|------|
@@ -47,12 +47,12 @@ Elle ne dépend d'aucun chemin.
 ## Produire un email
 
 1. **Invoquer explicitement** la skill (« /epi-com-interne ») — elle ne se déclenche jamais seule
-   (cf. [D-003](adr/D-003-declenchement-opt-in-strict.md)).
+   (cf. [D-003](decisions/D-003-declenchement-opt-in-strict.md)).
 2. **Répondre aux six questions** de cadrage : sujet/titre court, émetteur, email de contact,
    bilingue FR/EN ou non, bandeau haut (image fournie ou fallback), bandeau bas. Ce qui est déjà
    dans le prompt initial n'est pas redemandé (`SKILL.md:37`).
 3. **Valider le brouillon texte** — second point de contrôle, avant toute mise en page
-   ([D-006](adr/D-006-interrogation-prealable-et-validation-du-brouillon.md)).
+   ([D-006](decisions/D-006-interrogation-prealable-et-validation-du-brouillon.md)).
 4. Laisser l'assemblage se faire en shell, puis récupérer le `.html`.
 
 Squelette d'assemblage, pour mémoire — la version de référence est dans `SKILL.md:74-106` :
@@ -81,7 +81,7 @@ contre cette liste.
       visible en clair ;
 - [ ] aucun commentaire de délimiteur de snippet (`<!-- ==== … -->`) resté dans le corps.
 
-**Structure** ([D-005](adr/D-005-gabarit-a-placeholders-et-snippets.md))
+**Structure** ([D-005](decisions/D-005-gabarit-a-placeholders-et-snippets.md))
 
 - [ ] les sept blocs sont présents et dans l'ordre : preheader → bandeau haut → titre (+ mention
       bilingue) → contenu FR → *(divider + contenu EN)* → signature → bandeau bas → footer légal ;
@@ -89,7 +89,7 @@ contre cette liste.
       pas laissés en placeholder ni remplis d'un texte de remplissage ;
 - [ ] le footer porte les quatre lignes légales (copyright, mention salarié·e, adresse, contact).
 
-**Couleurs** ([D-009](adr/D-009-turquoise-reserve-aux-bandeaux.md))
+**Couleurs** ([D-009](decisions/D-009-turquoise-reserve-aux-bandeaux.md))
 
 - [ ] `#4BCDDB` **uniquement** en fond des deux bandeaux — jamais dans le corps, jamais en
       dégradé ;
@@ -97,7 +97,7 @@ contre cette liste.
 - [ ] `#246589` uniquement en **texte** (H1), jamais en fond ;
 - [ ] footer discret : 10px, `#bbbbbb`.
 
-**Éditorial** ([D-010](adr/D-010-conventions-editoriales-externalisees.md))
+**Éditorial** ([D-010](decisions/D-010-conventions-editoriales-externalisees.md))
 
 - [ ] salutation « Bonjour à toutes et à tous, » ;
 - [ ] 3 à 5 emoji-ancres maximum dans le corps, un par ancre ;
@@ -107,14 +107,14 @@ contre cette liste.
       trouver ci-joint ») ;
 - [ ] ligne de sujet au format `[emoji] [PRÉFIXE] titre orienté action`.
 
-**Bilingue**, le cas échéant ([D-011](adr/D-011-bilingue-fr-en-par-adaptation.md))
+**Bilingue**, le cas échéant ([D-011](decisions/D-011-bilingue-fr-en-par-adaptation.md))
 
 - [ ] FR en premier, mention `🇬🇧 english version below` sous le titre ;
 - [ ] divider entre les deux versions ;
 - [ ] l'EN a le **même nombre de sections** que le FR, et lit comme une adaptation, pas comme une
       traduction littérale.
 
-**Poids** ([D-004](adr/D-004-html-autonome-cible-gmail.md))
+**Poids** ([D-004](decisions/D-004-html-autonome-cible-gmail.md))
 
 - [ ] fichier < 102 Ko — au-delà, Gmail affiche « [Message clipped] » et tronque l'email :
 
@@ -137,7 +137,7 @@ texte, mais s'épuise vite si on ajoute des images embarquées.
   vérification la plus rentable de la checklist.
 - **Régénération accidentelle des blobs** — écrire le HTML final par un appel d'écriture au lieu du
   shell coûte des milliers de tokens et donne l'impression d'un blocage
-  ([D-007](adr/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md)). Le symptôme :
+  ([D-007](decisions/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md)). Le symptôme :
   une génération qui s'éternise sur du texte incompréhensible.
 - **Seuil Gmail de 102 Ko** — troncature silencieuse du point de vue de l'expéditeur : l'email
   part, mais les destinataires voient « [Message clipped] » et perdent la fin, footer inclus.

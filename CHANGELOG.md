@@ -1,9 +1,10 @@
 # Changelog
 
-Toutes les évolutions notables de la skill `epi-com-interne` sont consignées dans ce fichier.
+Toutes les modifications notables de la skill `epi-com-interne` sont documentées ici.
 
-Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le versionnement
-suit [SemVer](https://semver.org/lang/fr/), appliqué au **gabarit email** :
+Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
+versionnage selon [Semantic Versioning](https://semver.org/lang/fr/), appliqué au
+**gabarit email** :
 
 - **MAJEUR** — rupture visuelle ou de contrat : couleur des bandeaux modifiée, bloc de la
   structure verticale ajouté / retiré / déplacé, placeholder `{{…}}` renommé ou supprimé,
@@ -14,17 +15,84 @@ suit [SemVer](https://semver.org/lang/fr/), appliqué au **gabarit email** :
 - **CORRECTIF** — correction sans effet sur le contrat : valeur de padding, formulation d'une
   règle éditoriale, coquille, précision de compatibilité Gmail, exemple ajouté.
 
+<!-- STRUCTURE D'UNE ENTRÉE DE VERSION — toujours dans cet ordre :
+
+     ## [X.Y.Z] - AAAA-MM-JJ
+
+     ### 🎯 Vue synthétique (pour les utilisateurs)       ← OBLIGATOIRE
+         Ce que l'utilisateur de la skill voit changer, en langage d'usage. Pas de chemin de
+         fichier ici. Si une action est requise (réinstaller le zip…), une puce
+         **Action requise** en tête.
+
+     ### 📝 Détails techniques (pour les mainteneurs)      ← OBLIGATOIRE
+         Ce qui a été modifié, où (`fichier:ligne`), et pourquoi. Replié dans un <details>
+         dès que la liste dépasse quelques puces. Sous-sections Keep a Changelog, seulement
+         celles qui ont du contenu : Ajouté, Modifié, Corrigé, Supprimé, Déprécié, Sécurité.
+
+     ### 🔄 Compatibilité ascendante                       ← si MAJEUR, ou si doute
+
+     ### 🔬 Validé empiriquement                           ← dès qu'un test a été joué
+         Les tests de `tests/empirical_tests/` rejoués pour cette version, avec leur
+         résultat. Une version sans cette section n'a été validée par personne.
+
+     Séparer les versions par une ligne `---`. Ajouter le lien de comparaison en pied de
+     fichier à chaque release. -->
+
+---
+
 ## [Non publié]
 
-_Rien pour le moment._
+### 🎯 Vue synthétique (pour les utilisateurs)
 
-## [1.0.0] — 2026-09-09
+- **Rien ne change à l'usage.** Le dépôt est réorganisé selon le gabarit commun des dépôts de
+  skills Epiconcept ; la skill elle-même n'est pas modifiée.
 
-Première version **versionnée** de la skill. La skill existait et était utilisée avant cette
-date, mais hors gestion de version : son historique antérieur n'est pas reconstitué ici.
-`1.0.0` décrit donc l'**état du gabarit au moment de la mise sous dépôt**, à contenu inchangé.
+### 📝 Détails techniques (pour les mainteneurs)
 
-### Ajouté
+<details>
+<summary>Voir les changements</summary>
+
+#### Ajouté
+
+- `tests/tests_unitaires/` (vide : la skill n'embarque aucun script) et `tests/empirical_tests/`
+  (tests de comportement à jouer à la main ; aucun encore écrit), hors de `skill/`.
+- `CLAUDE.md` : sections « Dépôts voisins » et « Tests », conformes au gabarit.
+
+#### Modifié
+
+- `documentation/` devient `docs/`, et `documentation/adr/` devient `docs/decisions/` (chemin
+  recommandé par le guide ADR), par alignement sur le gabarit `ct-skill-template`. Liens
+  internes de `docs/PREREQUIS_TECHNIQUES.md`, `docs/MAINTENANCE_GABARIT.md`, `README.md` et
+  `CLAUDE.md` mis à jour.
+- `docs/MAINTENANCE_GABARIT.md` : divergences connues numérotées de façon stable ; procédure
+  d'évolution complétée (tests empiriques, deux vues du changelog).
+- `.gitignore` aligné sur le gabarit, en conservant les exclusions propres au gabarit email
+  (fragments temporaires d'assemblage).
+- Ce `CHANGELOG.md` adopte la structure d'entrée du gabarit (vue synthétique / détails
+  techniques) ; le contenu de l'entrée `1.0.0` est inchangé.
+- **Le contenu de `skill/` n'a pas été touché.**
+
+</details>
+
+---
+
+## [1.0.0] - 2026-09-09
+
+### 🎯 Vue synthétique (pour les utilisateurs)
+
+- **Première version versionnée de la skill.** La skill existait et était utilisée avant cette
+  date, mais hors gestion de version : son historique antérieur n'est pas reconstitué ici.
+  `1.0.0` décrit l'**état du gabarit au moment de la mise sous dépôt**, à contenu inchangé —
+  rien ne change à l'usage.
+- **Installation par release** : la skill se télécharge désormais sous forme de `skill.zip`
+  attaché à chaque release GitHub, à uploader tel quel dans Claude AI.
+
+### 📝 Détails techniques (pour les mainteneurs)
+
+<details>
+<summary>Voir les changements de cette version</summary>
+
+#### Ajouté
 
 - Mise du projet sous dépôt Git : `README.md`, `CLAUDE.md`, ce `CHANGELOG.md`,
   `.gitignore`, `documentation/` (prérequis techniques, guide de maintenance, ADR) et le
@@ -33,14 +101,14 @@ date, mais hors gestion de version : son historique antérieur n'est pas reconst
   (guide, templates, index — sans scripts ni CI), et traçage des décisions structurantes
   existantes en `D-001` à `D-012` (`documentation/adr/`).
 
-### Modifié
+#### Modifié
 
 - Le dossier de la skill est désormais `skill/` (précédemment `epi-com-interne/`), pour aligner
   le dépôt sur la convention des autres dépôts de skills Epiconcept (`ct-epi-visual`,
   `ct-fwk-specs-fonct`, `ct-ssi-tableau-de-bord`) et permettre au workflow de release de cibler
   un chemin stable. **Le contenu de la skill n'a pas été touché.**
 
-### Contenu du gabarit à cette version
+#### Contenu du gabarit à cette version
 
 - **Workflow** (`skill/SKILL.md`) : déclenchement opt-in strict, six questions de cadrage,
   validation du brouillon texte avant HTML, assemblage en shell, livraison du `.html`.
@@ -64,3 +132,14 @@ date, mais hors gestion de version : son historique antérieur n'est pas reconst
   collectif, structure type, table de seize emoji-ancres, formats de signature, patterns de
   ligne de sujet (`[emoji] [PRÉFIXE] titre orienté action`), règles du bilingue FR/EN par
   adaptation, footer standard, liste de formulations proscrites.
+
+</details>
+
+### 🔬 Validé empiriquement
+
+- Aucun test empirique consigné pour cette version.
+
+---
+
+[Non publié]: https://github.com/Epiconcept-Paris/ct-epi-com-interne/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Epiconcept-Paris/ct-epi-com-interne/releases/tag/v1.0.0

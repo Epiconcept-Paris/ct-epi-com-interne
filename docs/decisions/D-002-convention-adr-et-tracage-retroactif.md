@@ -1,11 +1,11 @@
 ---
 id: D-002
 title: "Cadrage — adoption de la convention ADR et traçage rétroactif du gabarit"
-status: accepted
+status: amended
 type: cadrage
 date: 2026-09-09
 supersedes: []
-amended_by: []
+amended_by: [D-013]
 sources:
   - D-001
 patterns:

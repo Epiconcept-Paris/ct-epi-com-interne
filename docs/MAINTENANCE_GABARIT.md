@@ -24,9 +24,9 @@ duplications à resynchroniser.
 | Les patterns de ligne de sujet | `references/editorial-patterns.md` §« Conventions de sujet » **et** `SKILL.md` §« Conventions de sujet » (dupliqué volontairement) |
 | Les règles du bilingue FR/EN | `references/editorial-patterns.md` §« Bilingue » + `SKILL.md` (étape 2) + le snippet `DIVIDER FR / EN` |
 | Une contrainte Gmail | `SKILL.md` §« Compatibilité Gmail » ; si elle impose un changement de markup, aussi `template.html` et les snippets |
-| La méthode d'assemblage | `SKILL.md` §« Étape 3 » — **passer par un ADR d'amendement**, cf. [D-007](adr/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md) |
-| Les conditions de déclenchement | `skill/SKILL.md` frontmatter `description` — **passer par un ADR d'amendement**, cf. [D-003](adr/D-003-declenchement-opt-in-strict.md) |
-| Les chemins d'environnement et les outils | `SKILL.md` étapes 1, 3 et 4 — **passer par un ADR d'amendement**, cf. [D-012](adr/D-012-environnement-cible-claude-ai.md) |
+| La méthode d'assemblage | `SKILL.md` §« Étape 3 » — **passer par un ADR d'amendement**, cf. [D-007](decisions/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md) |
+| Les conditions de déclenchement | `skill/SKILL.md` frontmatter `description` — **passer par un ADR d'amendement**, cf. [D-003](decisions/D-003-declenchement-opt-in-strict.md) |
+| Les chemins d'environnement et les outils | `SKILL.md` étapes 1, 3 et 4 — **passer par un ADR d'amendement**, cf. [D-012](decisions/D-012-environnement-cible-claude-ai.md) |
 
 ## Dépendance à la charte `ct-epi-visual` — non déclarée dans la skill
 
@@ -72,58 +72,62 @@ relecture du fichier produit.
 `SKILL.md` §« Rédiger le contenu » résume `editorial-patterns.md` en six puces, et renvoie au
 fichier de référence. Enrichir ce résumé au lieu du fichier crée deux guides éditoriaux qui
 divergeront — et le résumé, lu en premier, gagnera par accident
-([D-010](adr/D-010-conventions-editoriales-externalisees.md)).
+([D-010](decisions/D-010-conventions-editoriales-externalisees.md)).
 
 ### 5. Les chemins `/mnt/…` et `/home/claude/` ne sont pas une négligence
 
 Ils visent le système de fichiers de Claude AI, environnement cible assumé du gabarit
-([D-012](adr/D-012-environnement-cible-claude-ai.md)). Ne pas les « rendre portables » au passage
+([D-012](decisions/D-012-environnement-cible-claude-ai.md)). Ne pas les « rendre portables » au passage
 d'une autre modification. La transposition hors Claude AI est documentée dans
 [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md), pas résolue dans la skill.
 
 ## Divergences connues à la version 1.0.0
 
 Relevées lors de la mise sous dépôt. **Non corrigées** : le contenu de la skill a été laissé tel
-quel. À arbitrer par le mainteneur.
+quel. À arbitrer par le mainteneur. **Numérotation stable** : une entrée résolue est marquée
+« ✅ Résolue en X.Y.Z », jamais retirée ni renumérotée.
 
-- **Inventaire des logos contradictoire** — `SKILL.md:164` dit que `logo-e-white.png` est utilisé
-  dans les bandeaux **haut et bas**, et `SKILL.md:166` que `logo-e-turquoise.png` « n'est plus
-  utilisée ». Mais l'inventaire final `SKILL.md:205-206` annonce toujours
-  « `logo-e-white.png` — pour bandeau haut » et « `logo-e-turquoise.png` — pour bandeau bas ».
-  Le rendu réel suit `:164` (les deux bandeaux ont un fond turquoise, donc un logo blanc).
-  L'inventaire est un reste d'une version antérieure.
-- **Taille du footer divergente** — `SKILL.md:154` et `template.html` fixent le footer à
-  **10px `#bbbbbb`** ; `references/editorial-patterns.md:128` annonce **11-12px `#999999`**. Le
-  template fait foi au rendu ; la référence éditoriale décrit un état antérieur.
-- **Deux assets sur trois inutilisés** — `logo-e-turquoise.png` est explicitement en réserve
-  (`SKILL.md:166`) et `logo-e-original.png` est « référence, peu utilisé » (`SKILL.md:207`, format
-  213×120, différent des deux autres en 80×80). Ils sont conservés dans le `.zip` de release : à
-  garder si la réserve a un sens, à retirer sinon.
-- **Aucun contrôle automatique** — pas de vérification des placeholders substitués, pas de mesure
-  de poids, pas de validateur de rendu email. Tout est manuel, via la checklist de
-  [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md).
-- **`{{VIEW_URL}}` sans archive web** — le preheader « View this email in your browser » est
-  toujours présent dans le template, mais aucun mécanisme d'archive n'existe : le lien vaut `#`
-  par défaut (`template.html`, en-tête de commentaires). Un lien mort visible en tête d'email —
-  à assumer ou à retirer.
-- **`{{LANG_NOTICE}}` en anglais, dans un template `lang="fr"`** — le libellé
-  « 🇬🇧 English version below » est volontairement anglais, comme
-  « View this email in your browser » et « SMART HEALTH ». Ce n'est pas une entorse à la règle de
-  langue française du dépôt, mais il vaut mieux le savoir avant de « corriger » ces chaînes.
+1. **Inventaire des logos contradictoire** — `SKILL.md:164` dit que `logo-e-white.png` est utilisé
+   dans les bandeaux **haut et bas**, et `SKILL.md:166` que `logo-e-turquoise.png` « n'est plus
+   utilisée ». Mais l'inventaire final `SKILL.md:205-206` annonce toujours
+   « `logo-e-white.png` — pour bandeau haut » et « `logo-e-turquoise.png` — pour bandeau bas ».
+   Le rendu réel suit `:164` (les deux bandeaux ont un fond turquoise, donc un logo blanc).
+   L'inventaire est un reste d'une version antérieure.
+2. **Taille du footer divergente** — `SKILL.md:154` et `template.html` fixent le footer à
+   **10px `#bbbbbb`** ; `references/editorial-patterns.md:128` annonce **11-12px `#999999`**. Le
+   template fait foi au rendu ; la référence éditoriale décrit un état antérieur.
+3. **Deux assets sur trois inutilisés** — `logo-e-turquoise.png` est explicitement en réserve
+   (`SKILL.md:166`) et `logo-e-original.png` est « référence, peu utilisé » (`SKILL.md:207`, format
+   213×120, différent des deux autres en 80×80). Ils sont conservés dans le `.zip` de release : à
+   garder si la réserve a un sens, à retirer sinon.
+4. **Aucun contrôle automatique** — pas de vérification des placeholders substitués, pas de mesure
+   de poids, pas de validateur de rendu email. Tout est manuel, via la checklist de
+   [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md).
+5. **`{{VIEW_URL}}` sans archive web** — le preheader « View this email in your browser » est
+   toujours présent dans le template, mais aucun mécanisme d'archive n'existe : le lien vaut `#`
+   par défaut (`template.html`, en-tête de commentaires). Un lien mort visible en tête d'email —
+   à assumer ou à retirer.
+6. **`{{LANG_NOTICE}}` en anglais, dans un template `lang="fr"`** — le libellé
+   « 🇬🇧 English version below » est volontairement anglais, comme
+   « View this email in your browser » et « SMART HEALTH ». Ce n'est pas une entorse à la règle de
+   langue française du dépôt, mais il vaut mieux le savoir avant de « corriger » ces chaînes.
 
 ## Procédure d'évolution
 
 1. Modifier les fichiers listés dans la carte ci-dessus — **tous** ceux de la ligne concernée.
 2. Si une couleur ou le logo est touché : **vérifier d'abord `ct-epi-visual`**, qui fait autorité.
 3. Produire un email de test, l'ouvrir dans un navigateur **et** le coller dans Gmail, puis
-   repasser la checklist de [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md).
-4. Si la décision est structurante, écrire une ADR dans `documentation/adr/` et l'ajouter à
+   repasser la checklist de [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md) et rejouer les
+   tests de `tests/empirical_tests/`.
+4. Si la décision est structurante, écrire une ADR dans `docs/decisions/` et l'ajouter à
    l'index. Toucher à la `description` de la frontmatter, à la méthode d'assemblage ou aux chemins
    d'environnement impose un ADR d'**amendement** de
-   [D-003](adr/D-003-declenchement-opt-in-strict.md),
-   [D-007](adr/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md) ou
-   [D-012](adr/D-012-environnement-cible-claude-ai.md).
+   [D-003](decisions/D-003-declenchement-opt-in-strict.md),
+   [D-007](decisions/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md) ou
+   [D-012](decisions/D-012-environnement-cible-claude-ai.md).
 5. Ajouter une entrée dans `CHANGELOG.md`, en choisissant l'incrément selon les règles SemVer qui
-   y sont définies (une couleur de bandeau ou un placeholder qui change est **MAJEUR**).
+   y sont définies (une couleur de bandeau ou un placeholder qui change est **MAJEUR**), avec
+   ses deux vues — synthétique et technique — et, si des tests ont été joués, la section
+   « 🔬 Validé empiriquement ».
 6. Mettre à jour le numéro de version affiché dans `README.md`.
 7. Publier une release GitHub sur le tag : le workflow attache automatiquement `skill.zip`.

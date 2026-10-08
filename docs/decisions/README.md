@@ -27,11 +27,16 @@ Guide méthodologique (quand ouvrir un ADR, workflows, anti-patterns) :
 
 ### Adaptations locales
 
-- **Emplacement** : `documentation/adr/` et non `docs/decisions/`
-  (chemin recommandé par le guide, dont l'adaptation est explicitement
-  autorisée). Motif : ce dépôt place toute sa documentation de référence
-  sous `documentation/` — cf. [D-002](D-002-convention-adr-et-tracage-retroactif.md),
-  axe 2.
+- **Emplacement** : `docs/decisions/`, le chemin recommandé par le
+  guide — aucune adaptation, depuis
+  [D-013](D-013-amendement-d002-alignement-gabarit-de-depot.md) qui
+  amende l'axe 2 de [D-002](D-002-convention-adr-et-tracage-retroactif.md)
+  et aligne le dépôt sur le gabarit `ct-skill-template`.
+- **Anciens chemins dans les corps figés** : `D-001` à `D-012` ont été
+  écrits quand les ADR vivaient sous `documentation/adr/` et la
+  documentation de référence sous `documentation/`. Leurs mentions de
+  ces chemins se lisent `docs/decisions/` et `docs/` ; elles ne sont pas
+  des erreurs et ne se corrigent pas (corps d'ADR publiés).
 - **Périmètre du kit** : version minimale — guide, templates et index.
   Ni `adr_new.py`, ni `adr_check.py`, ni CI `adr-check`, ni schema JSON.
   Le guide y fait référence : ces mentions décrivent le kit, pas ce
@@ -64,6 +69,7 @@ Triées par ID décroissant (le plus récent en haut).
 
 | ID | Titre | Status | Type | Date |
 |---|---|---|---|---|
+| [D-013](D-013-amendement-d002-alignement-gabarit-de-depot.md) | Amendement D-002 — ADR sous docs/decisions/, dépôt aligné sur le gabarit commun | accepted | amendement | 2026-10-08 |
 | [D-012](D-012-environnement-cible-claude-ai.md) | Claude AI comme environnement cible, chemins et outils assumés | accepted | cadrage | 2026-09-09 |
 | [D-011](D-011-bilingue-fr-en-par-adaptation.md) | Bilingue FR/EN dans un seul email, par adaptation et non par traduction | accepted | cadrage | 2026-09-09 |
 | [D-010](D-010-conventions-editoriales-externalisees.md) | Conventions éditoriales externalisées, tirées de communications réelles | accepted | cadrage | 2026-09-09 |
@@ -74,7 +80,7 @@ Triées par ID décroissant (le plus récent en haut).
 | [D-005](D-005-gabarit-a-placeholders-et-snippets.md) | Gabarit à placeholders et snippets externalisés, structure verticale imposée | accepted | cadrage | 2026-09-09 |
 | [D-004](D-004-html-autonome-cible-gmail.md) | Un HTML autonome ciblant Gmail, sans ESP ni dépendance externe | accepted | cadrage | 2026-09-09 |
 | [D-003](D-003-declenchement-opt-in-strict.md) | Déclenchement opt-in strict, avec question préalable | accepted | cadrage | 2026-09-09 |
-| [D-002](D-002-convention-adr-et-tracage-retroactif.md) | Adoption de la convention ADR et traçage rétroactif du gabarit | accepted | cadrage | 2026-09-09 |
+| [D-002](D-002-convention-adr-et-tracage-retroactif.md) | Adoption de la convention ADR et traçage rétroactif du gabarit | amended | cadrage | 2026-09-09 |
 | [D-001](D-001-mise-sous-depot-de-la-skill.md) | Mise sous dépôt de la skill epi-com-interne, dans son propre dépôt | accepted | cadrage | 2026-09-09 |
 
 ## Patterns inscrits
@@ -105,6 +111,7 @@ Handles posés par ces ADR, citables et greppables.
 | `livrable-self-contained-zero-dependance` | D-004 |
 | `opt-in-strict-avec-question-prealable` | D-003 |
 | `placeholder-comme-contrat-d-assemblage` | D-005 |
+| `structure-alignee-sur-le-gabarit-commun` | D-013 |
 | `un-depot-par-skill` | D-001 |
 | `validation-au-stade-le-moins-couteux` | D-006 |
 | `voix-externalisee-hors-regles` | D-010 |
