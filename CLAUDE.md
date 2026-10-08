@@ -35,7 +35,7 @@ Dépôts voisins, à ne pas confondre :
 
 - `skill/SKILL.md` — le **workflow et les règles** : quand se déclencher, quoi demander, comment
   assembler, quelles couleurs, quelles contraintes Gmail.
-- `skill/assets/template.html` — le **gabarit** : la structure verticale en sept blocs, le
+- `skill/assets/template.html` — le **gabarit** : la structure verticale en cinq blocs, le
   conteneur 600px, les styles inline, les placeholders `{{…}}`.
 - `skill/references/editorial-patterns.md` — le **guide éditorial** : ton, structure type,
   emoji-ancres, signature, lignes de sujet, formulations proscrites.
@@ -50,12 +50,12 @@ Il n'y a pas de chargement sélectif : les fichiers sont petits et tous utiles �
 
 ### La règle la plus importante : les blobs base64 ne passent pas par le contexte
 
-`skill/assets/banner-fallback-snippets.html` embarque le logo « e » en data URI, deux fois
-(~6 000 caractères par blob). `SKILL.md:54` interdit de les réécrire, et impose l'assemblage par
+`skill/assets/banner-fallback-snippets.html` embarque le logo « e » en data URI
+(~6 000 caractères). `SKILL.md:53` interdit de le réécrire, et impose l'assemblage par
 le shell ([D-007](docs/decisions/D-007-assemblage-par-le-shell-jamais-de-base64-en-contexte.md)).
 
 Concrètement, à l'exécution : Claude écrit **seulement** les fragments éditoriaux
-(`content_fr.html`, `content_en.html`, `signature.html`), puis un script `awk` / `sed` /
+(`content_fr.html`, `content_en.html`, `signature.html`), puis un script `sed` /
 `python3` extrait les snippets, substitue les placeholders et écrit le fichier final. Jamais
 d'appel d'écriture avec le HTML complet.
 
@@ -73,8 +73,8 @@ contexte pour rien.
 
 Le workflow impose **deux** arrêts ([D-006](docs/decisions/D-006-interrogation-prealable-et-validation-du-brouillon.md)) :
 
-1. les six questions de cadrage **avant** de rédiger (`SKILL.md:26-37`) ;
-2. le **brouillon texte** soumis à validation **avant** de générer le HTML (`SKILL.md:50`).
+1. les cinq questions de cadrage **avant** de rédiger (`SKILL.md:26-36`) ;
+2. le **brouillon texte** soumis à validation **avant** de générer le HTML (`SKILL.md:49`).
 
 Ne pas fusionner les deux, ne pas sauter le second : « la mise en page coûte cher à refaire, le
 texte est plus rapide à itérer ». Une correction de fond après assemblage impose de tout
@@ -82,9 +82,9 @@ réassembler.
 
 ### Le turquoise est un invariant de marque, pas un choix de style
 
-`#4BCDDB` en **fond des deux bandeaux uniquement** ; corps du mail blanc ; `#246589` réservé au
-**texte** des titres ; footer 10px `#bbbbbb`
-([D-009](docs/decisions/D-009-turquoise-reserve-aux-bandeaux.md)). Pas de dégradé
+`#4BCDDB` en **fond du bandeau haut uniquement** ; corps du mail blanc ; `#246589` réservé au
+**texte** des titres ; footer 11px `#999999` dans la carte, sous la signature
+([D-009](docs/decisions/D-009-turquoise-reserve-aux-bandeaux.md), amendé par [D-015](docs/decisions/D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md)). Pas de bandeau en bas, pas de dégradé
 turquoise → bleu foncé, pas de bloc intermédiaire coloré, jamais de bleu foncé en fond.
 
 Ces valeurs viennent de la charte portée par `ct-epi-visual` : c'est **elle** qui fait autorité,
@@ -101,7 +101,7 @@ ce dépôt en est consommateur (cf. `docs/MAINTENANCE_GABARIT.md`).
   assemblage en shell, fragments éditoriaux seuls écrits par Claude.
 - **HTML autonome, cible Gmail ([D-004](docs/decisions/D-004-html-autonome-cible-gmail.md))** :
   un fichier, zéro dépendance externe, zéro ESP. Tables, styles inline, 600px, < 102 Ko.
-- **Turquoise réservé aux bandeaux ([D-009](docs/decisions/D-009-turquoise-reserve-aux-bandeaux.md))**,
+- **Turquoise réservé au bandeau haut ([D-009](docs/decisions/D-009-turquoise-reserve-aux-bandeaux.md), [D-015](docs/decisions/D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md))**,
   et logo « e » = image officielle — jamais reproduit par formes dessinées, jamais en SVG inline
   (Gmail le strippe).
 - **Deux points de contrôle utilisateur ([D-006](docs/decisions/D-006-interrogation-prealable-et-validation-du-brouillon.md))** :
@@ -116,7 +116,7 @@ ce dépôt en est consommateur (cf. `docs/MAINTENANCE_GABARIT.md`).
 - **Langue** : documentation, commentaires et libellés en **français accentué**. Ne jamais omettre
   les accents (« résumé exécutif », pas « resume executif »). Exceptions : code, noms de
   fichiers/classes, termes techniques anglais sans équivalent, et les libellés anglais volontaires
-  du gabarit (« View this email in your browser », « SMART HEALTH »).
+  du gabarit (« 🇬🇧 English version below », « 🇬🇧 English version »).
 
 ## Décisions structurantes (ADR)
 
@@ -159,7 +159,7 @@ Règles de travail à respecter ici :
   embarque des scripts** (`skill/scripts/`). Ils testent le code, pas le comportement de Claude.
   La skill n'a pas de script : le dossier reste vide.
 - **`tests/empirical_tests/`** — tests **à jouer manuellement par un humain** dans Claude AI : un
-  prompt, le contexte fourni, le comportement attendu (déclenchement opt-in, six questions de
+  prompt, le contexte fourni, le comportement attendu (déclenchement opt-in, cinq questions de
   cadrage, validation du brouillon texte, rendu du `.html` contre la checklist de
   `docs/PREREQUIS_TECHNIQUES.md`). Les rejouer avant chaque release et consigner le résultat dans
   `CHANGELOG.md`, § « 🔬 Validé empiriquement ». Aucun test n'y est encore écrit.
@@ -171,8 +171,8 @@ Règles de travail à respecter ici :
 pour chaque type d'évolution, quelles valeurs sont dupliquées volontairement (les couleurs et les
 dimensions figurent à la fois dans `SKILL.md` et dans les fichiers HTML), la **dépendance non
 déclarée à la charte `ct-epi-visual`**, les cinq pièges de maintenance et les **divergences
-connues** de la version courante (inventaire des logos contradictoire, taille du footer
-différente entre `SKILL.md` et `editorial-patterns.md`, deux assets sur trois inutilisés…).
+connues** (deux assets sur trois inutilisés, aucun contrôle automatique, libellés anglais
+volontaires… — les n° 1, 2 et 5 sont résolues en 2.0.0).
 Les divergences y sont **numérotées de façon stable** : une entrée résolue est marquée résolue,
 jamais retirée ni renumérotée.
 

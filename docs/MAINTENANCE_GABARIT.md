@@ -11,15 +11,15 @@ duplications à resynchroniser.
 
 | Ce qui change | Fichier(s) à modifier |
 |---------------|-----------------------|
-| Le turquoise des bandeaux (`#4BCDDB`) | `SKILL.md` (§« Règle de couleurs », §« Bandeau du haut », §« Bandeau du bas ») **et** les deux `background-color` de `banner-fallback-snippets.html` — **et vérifier d'abord la charte `ct-epi-visual`**, qui fait autorité |
+| Le turquoise du bandeau haut (`#4BCDDB`) | `SKILL.md` (§« Règle de couleurs », §« Bandeau du haut ») **et** le `background-color` / `bgcolor` du snippet `HEADER` de `banner-fallback-snippets.html` (et le trait du snippet `DIVIDER`) — **et vérifier d'abord la charte `ct-epi-visual`**, qui fait autorité |
 | Le bleu foncé du titre (`#246589`) | `SKILL.md` (§« Règle de couleurs ») **et** le `color` du `<h1>` de `template.html` |
-| La couleur / taille du footer légal | `template.html` (bloc footer) + `SKILL.md` §« Footer copyright » + `references/editorial-patterns.md` §« Footer standard » — **trois endroits, aujourd'hui divergents** (voir ci-dessous) |
-| Le texte des mentions légales (copyright, salarié·e, adresse) | `template.html` (bloc footer) **et** `references/editorial-patterns.md` §« Footer standard » |
+| La couleur / taille du footer légal | `template.html` (bloc footer) + `SKILL.md` §« Footer légal » et tableau « Règle de couleurs » + `references/editorial-patterns.md` §« Footer standard » — **trois endroits**, alignés sur 11px `#999999` depuis [D-015](decisions/D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md) |
+| Le texte des mentions légales (copyright, mention salarié·e) | `template.html` (bloc footer) **et** `references/editorial-patterns.md` §« Footer standard » |
 | Un bloc de la structure verticale (ajout, retrait, déplacement) | `template.html` (le `<tr>`) **puis** `SKILL.md` §« Ce qu'il faut produire » (la liste numérotée) **puis** l'en-tête de commentaires de `template.html` si un placeholder est concerné ; **MAJEUR** au sens SemVer |
-| Un placeholder `{{…}}` | `template.html` (l'occurrence **et** l'en-tête de commentaires qui les documente) + le dictionnaire `subs` de l'exemple `SKILL.md:90-102` ; **MAJEUR** : un placeholder renommé reste visible en clair dans l'email |
-| Les dimensions ou paddings d'un bandeau | `banner-fallback-snippets.html` **et** `SKILL.md` §« Bandeau du haut » / §« Bandeau du bas » (les valeurs y sont recopiées « pour référence ») |
-| Le logo embarqué | remplacer le PNG dans `skill/assets/` en **conservant le nom**, puis **régénérer les data URI** des deux snippets — le PNG seul ne suffit pas, c'est le base64 qui est rendu ; puis mettre à jour l'inventaire `SKILL.md:200-207` |
-| Ajouter / retirer un snippet | `banner-fallback-snippets.html` **et** la plage d'extraction `awk` de `SKILL.md:80-82` (garde `NR>30` codée en dur — voir « Pièges ») |
+| Un placeholder `{{…}}` | `template.html` (l'occurrence **et** l'en-tête de commentaires qui les documente) + le dictionnaire `subs` du squelette d'assemblage de `SKILL.md` (étape 3) ; **MAJEUR** : un placeholder renommé reste visible en clair dans l'email |
+| Les dimensions ou paddings du bandeau haut | `banner-fallback-snippets.html` (snippet `HEADER`) **et** `SKILL.md` §« Bandeau du haut » (les valeurs y sont recopiées « pour référence ») |
+| Le logo embarqué | remplacer le PNG dans `skill/assets/` en **conservant le nom**, puis **régénérer le data URI** du snippet `HEADER` — le PNG seul ne suffit pas, c'est le base64 qui est rendu ; puis mettre à jour l'inventaire de `SKILL.md` §« Fichiers de référence » |
+| Ajouter / retirer / renommer un snippet | `banner-fallback-snippets.html` (repères `<!-- BEGIN:NOM -->` / `<!-- END:NOM -->` **et** liste en en-tête de commentaires) **et** l'étape 3 de `SKILL.md` (appels à `snippet NOM`, inventaire des fichiers) |
 | Le ton, la structure type, un emoji-ancre, une formulation proscrite | `references/editorial-patterns.md` uniquement — `SKILL.md` §« Rédiger le contenu » n'en donne qu'un résumé, à ne pas enrichir |
 | Les patterns de ligne de sujet | `references/editorial-patterns.md` §« Conventions de sujet » **et** `SKILL.md` §« Conventions de sujet » (dupliqué volontairement) |
 | Les règles du bilingue FR/EN | `references/editorial-patterns.md` §« Bilingue » + `SKILL.md` (étape 2) + le snippet `DIVIDER FR / EN` |
@@ -40,7 +40,7 @@ Ce dépôt en est **consommateur**, et rien dans `skill/SKILL.md` ne le dit. Con
   maintenance manuelle, à faire dans le même mouvement ;
 - `logo-e-white.png` est une **variante dérivée** (silhouette blanche 80×80) qui n'existe pas
   dans `ct-epi-visual` : si le logo officiel change, cette variante doit être **regénérée**, puis
-  ré-encodée en base64 dans les deux snippets ;
+  ré-encodée en base64 dans le snippet `HEADER` ;
 - en cas de contradiction, la charte prévaut. La corriger ici sans la corriger là-bas crée deux
   vérités.
 
@@ -50,22 +50,27 @@ Ce dépôt en est **consommateur**, et rien dans `skill/SKILL.md` ne le dit. Con
 
 Ce qui est rendu dans l'email, c'est le **data URI** des snippets, pas le fichier PNG. Les trois
 PNG de `assets/` sont des **sources** : le rendu ne les lit jamais. Remplacer `logo-e-white.png`
-sans régénérer les deux blobs base64 ne change rien au livrable — et laisse le dépôt dans un état
+sans régénérer le blob base64 ne change rien au livrable — et laisse le dépôt dans un état
 trompeur.
 
-### 2. Les plages d'extraction `awk` sont fragiles
+### 2. Les repères `BEGIN:` / `END:` sont l'interface d'extraction
 
-`SKILL.md:80-82` extrait les snippets entre commentaires délimiteurs, avec une garde `NR>30`
-**codée en dur**. Ajouter, retirer ou déplacer un snippet décale les numéros de ligne et peut
-faire extraire le mauvais bloc, sans aucune erreur. Après toute modification de
-`banner-fallback-snippets.html`, produire un email de test et regarder les deux bandeaux.
+Les snippets s'extraient par leurs repères (`<!-- BEGIN:HEADER -->` … `<!-- END:HEADER -->`,
+chacun seul sur sa ligne), plus par numéro de ligne : l'ordre des snippets est indifférent. En
+revanche, un repère renommé, supprimé ou dupliqué donne un snippet vide ou faux. Le squelette de
+`SKILL.md` s'arrête si le bandeau haut sort vide, mais pas le divider. Ne jamais écrire le texte
+littéral d'un repère ailleurs dans le fichier (un commentaire d'exemple le capterait), ni `-->`
+à l'intérieur de l'en-tête de commentaires. Avant [D-014](decisions/D-014-amendement-d005-structure-sans-bandeau-bas.md),
+l'extraction se faisait par plage `awk` et ne produisait **rien** : la plage se refermait sur
+l'en-tête du snippet lui-même.
 
 ### 3. Un placeholder renommé ne casse rien — il s'affiche
 
-Aucun outillage ne vérifie que tous les `{{…}}` ont été substitués. Un placeholder renommé dans le
-template mais pas dans le dictionnaire d'assemblage se retrouve **visible en clair dans l'email
-envoyé**. C'est le mode d'échec le plus embarrassant du gabarit, et il est indétectable sans
-relecture du fichier produit.
+Un placeholder renommé dans le template mais pas dans le dictionnaire d'assemblage se retrouve
+**visible en clair dans l'email envoyé**. C'est le mode d'échec le plus embarrassant du gabarit.
+Depuis [D-014](decisions/D-014-amendement-d005-structure-sans-bandeau-bas.md), le squelette
+d'assemblage de `SKILL.md` échoue s'il reste un `{{…}}` — mais seulement si Claude reprend ce
+squelette : la relecture du fichier produit reste nécessaire.
 
 ### 4. Le résumé éditorial de `SKILL.md` ne doit pas grossir
 
@@ -87,13 +92,18 @@ Relevées lors de la mise sous dépôt. **Non corrigées** : le contenu de la sk
 quel. À arbitrer par le mainteneur. **Numérotation stable** : une entrée résolue est marquée
 « ✅ Résolue en X.Y.Z », jamais retirée ni renumérotée.
 
-1. **Inventaire des logos contradictoire** — `SKILL.md:164` dit que `logo-e-white.png` est utilisé
+1. ~~**Inventaire des logos contradictoire.**~~ **✅ Résolue en 2.0.0 (non publiée)** par
+   [D-015](decisions/D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md) : sans bandeau
+   bas, l'inventaire annonce `logo-e-white.png` pour le bandeau haut et `logo-e-turquoise.png` en
+   réserve. Constat d'origine : `SKILL.md:164` dit que `logo-e-white.png` est utilisé
    dans les bandeaux **haut et bas**, et `SKILL.md:166` que `logo-e-turquoise.png` « n'est plus
    utilisée ». Mais l'inventaire final `SKILL.md:205-206` annonce toujours
    « `logo-e-white.png` — pour bandeau haut » et « `logo-e-turquoise.png` — pour bandeau bas ».
    Le rendu réel suit `:164` (les deux bandeaux ont un fond turquoise, donc un logo blanc).
    L'inventaire est un reste d'une version antérieure.
-2. **Taille du footer divergente** — `SKILL.md:154` et `template.html` fixent le footer à
+2. ~~**Taille du footer divergente.**~~ **✅ Résolue en 2.0.0 (non publiée)** par
+   [D-015](decisions/D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md) : 11px `#999999`
+   dans le template, `SKILL.md` et la référence éditoriale. Constat d'origine : `SKILL.md:154` et `template.html` fixent le footer à
    **10px `#bbbbbb`** ; `references/editorial-patterns.md:128` annonce **11-12px `#999999`**. Le
    template fait foi au rendu ; la référence éditoriale décrit un état antérieur.
 3. **Deux assets sur trois inutilisés** — `logo-e-turquoise.png` est explicitement en réserve
@@ -103,7 +113,9 @@ quel. À arbitrer par le mainteneur. **Numérotation stable** : une entrée rés
 4. **Aucun contrôle automatique** — pas de vérification des placeholders substitués, pas de mesure
    de poids, pas de validateur de rendu email. Tout est manuel, via la checklist de
    [PREREQUIS_TECHNIQUES.md](PREREQUIS_TECHNIQUES.md).
-5. **`{{VIEW_URL}}` sans archive web** — le preheader « View this email in your browser » est
+5. ~~**`{{VIEW_URL}}` sans archive web.**~~ **✅ Résolue en 2.0.0 (non publiée)** par
+   [D-014](decisions/D-014-amendement-d005-structure-sans-bandeau-bas.md) : preheader et
+   placeholder supprimés. Constat d'origine : le preheader « View this email in your browser » est
    toujours présent dans le template, mais aucun mécanisme d'archive n'existe : le lien vaut `#`
    par défaut (`template.html`, en-tête de commentaires). Un lien mort visible en tête d'email —
    à assumer ou à retirer.
@@ -111,6 +123,9 @@ quel. À arbitrer par le mainteneur. **Numérotation stable** : une entrée rés
    « 🇬🇧 English version below » est volontairement anglais, comme
    « View this email in your browser » et « SMART HEALTH ». Ce n'est pas une entorse à la règle de
    langue française du dépôt, mais il vaut mieux le savoir avant de « corriger » ces chaînes.
+   *Mise à jour 2.0.0* : « View this email in your browser » et « SMART HEALTH » ont disparu avec
+   le preheader et le bandeau bas ([D-014](decisions/D-014-amendement-d005-structure-sans-bandeau-bas.md)) ;
+   restent `{{LANG_NOTICE}}` et le libellé « 🇬🇧 English version » du divider.
 
 ## Procédure d'évolution
 

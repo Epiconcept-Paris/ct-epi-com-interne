@@ -2,7 +2,7 @@
 
 Gabarit de **communication interne Epiconcept** au format email, livré sous forme de **skill
 Claude** : un fichier HTML autonome prêt à coller dans Gmail — bandeau turquoise haut, contenu
-mono ou bilingue FR/EN, bandeau turquoise bas, footer légal — plus les conventions éditoriales
+mono ou bilingue FR/EN, signature et footer légal dans la même carte — plus les conventions éditoriales
 maison (ton, emoji-ancres, lignes de sujet, formulations proscrites).
 
 **Version : 1.0.0** · Statut : en production.
@@ -15,9 +15,9 @@ HTML final en substituant les fragments dans le template.
 
 | Étape | Ce que fait la skill |
 |-------|----------------------|
-| 1. Cadrage | 6 questions : sujet, émetteur, email de contact, bilingue ou non, bandeau haut, bandeau bas |
+| 1. Cadrage | 5 questions : sujet, émetteur, email de contact, bilingue ou non, bandeau haut |
 | 2. Rédaction | brouillon **texte** soumis à validation — la mise en page coûte cher à refaire |
-| 3. Assemblage | fragments éditoriaux + `assets/template.html` + snippets de bandeaux, assemblés **par le shell** |
+| 3. Assemblage | fragments éditoriaux + `assets/template.html` + snippet du bandeau haut, assemblés **par le shell** |
 | 4. Livraison | un `.html` unique, self-contained, à coller dans Gmail ou à ouvrir dans un navigateur |
 
 Trois principes structurants :
@@ -26,10 +26,10 @@ Trois principes structurants :
   email interne Epiconcept manifeste. Soit l'utilisateur la nomme (« /epi-com-interne »), soit
   Claude **demande l'autorisation avant** de produire le livrable. Il est interdit de produire un
   brouillon nu puis de proposer de le retransformer en email brandé.
-- **Les blobs base64 ne passent jamais par le contexte.** Les logos sont embarqués en data URI
-  dans les snippets (~6 000 caractères chacun). Claude ne génère que les fragments éditoriaux ;
-  l'assemblage se fait en shell, `cat` / `sed` / `python3`, jamais par réécriture du HTML complet.
-- **Le turquoise appartient aux bandeaux.** `#4BCDDB` en fond des deux bandeaux uniquement, corps
+- **Les blobs base64 ne passent jamais par le contexte.** Le logo est embarqué en data URI
+  dans le snippet du bandeau (~6 000 caractères). Claude ne génère que les fragments éditoriaux ;
+  l'assemblage se fait en shell, `sed` / `python3`, jamais par réécriture du HTML complet.
+- **Le turquoise appartient au bandeau haut.** `#4BCDDB` en fond du bandeau haut uniquement, corps
   du mail blanc, `#246589` réservé au **texte** des titres. Pas de dégradé, pas de bloc
   intermédiaire coloré.
 
@@ -55,7 +55,7 @@ ct-epi-com-interne/
     ├── SKILL.md                     ← workflow, règles de couleur, contraintes Gmail
     ├── assets/
     │   ├── template.html            ← gabarit HTML à placeholders {{…}}
-    │   ├── banner-fallback-snippets.html  ← bandeaux haut/bas/variantes/divider (logos en base64)
+    │   ├── banner-fallback-snippets.html  ← bandeau haut, variante image, divider (logo en base64)
     │   ├── logo-e-white.png         ← logo « e » blanc — le seul utilisé au rendu
     │   ├── logo-e-turquoise.png     ← variante turquoise (réserve)
     │   └── logo-e-original.png      ← logo original (référence)
@@ -69,7 +69,7 @@ ct-epi-com-interne/
 ## Prérequis
 
 - **Claude AI**, avec la skill installée. C'est l'**environnement cible** : l'assemblage passe par
-  un shell (`bash_tool`) avec `awk` / `sed` / `python3`, lit les assets depuis
+  un shell (`bash_tool`) avec `sed` / `python3`, lit les assets depuis
   `/mnt/skills/user/epi-com-interne/`, travaille dans `/home/claude/` et livre dans
   `/mnt/user-data/outputs/`. Hors de Claude AI, la skill fonctionne en mode dégradé —
   transposition dans `docs/PREREQUIS_TECHNIQUES.md`.

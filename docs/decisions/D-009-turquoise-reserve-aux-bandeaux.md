@@ -1,11 +1,11 @@
 ---
 id: D-009
 title: "Cadrage — turquoise réservé aux deux bandeaux, logo officiel jamais redessiné"
-status: accepted
+status: amended
 type: cadrage
 date: 2026-09-09
 supersedes: []
-amended_by: []
+amended_by: [D-015]
 sources:
   - D-002
   - D-005

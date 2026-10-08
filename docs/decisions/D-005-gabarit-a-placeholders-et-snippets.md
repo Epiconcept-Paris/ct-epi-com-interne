@@ -1,11 +1,11 @@
 ---
 id: D-005
 title: "Cadrage — gabarit à placeholders et snippets externalisés, structure verticale imposée"
-status: accepted
+status: amended
 type: cadrage
 date: 2026-09-09
 supersedes: []
-amended_by: []
+amended_by: [D-014]
 sources:
   - D-002
   - D-004

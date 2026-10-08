@@ -121,11 +121,9 @@ Tous les mails terminent par un bloc footer fixe (à part la signature) :
 ```
 Copyright © 2026 EPICONCEPT
 Vous recevez cet email en tant que salarié·e d'Epiconcept / You are receiving this email as an Epiconcept staff member.
-
-Epiconcept · 25, rue Titon · Paris 75011 · France
 ```
 
-Le footer est en petite police (11-12px), gris (`#999999`), centré.
+Le footer est en petite police (11px), gris (`#999999`), centré, juste sous la signature et séparé d'elle par un trait gris fin — dans la même carte blanche que le contenu.
 
 ## Mises en garde
 

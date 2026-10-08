@@ -3,16 +3,15 @@
   Cible : Gmail (Google Workspace) — web, iOS, Android. Previewable dans navigateur.
   Placeholders à substituer :
     {{TITLE}}            — sujet court (titre du mail)
-    {{VIEW_URL}}         — URL d'archive web (laisser `#` si pas d'archive)
     {{HEADER_BANNER}}    — bloc HTML du bandeau haut (img ou fallback CSS)
     {{LANG_NOTICE}}      — "🇬🇧 english version below" si bilingue, sinon ""
     {{CONTENT_FR}}       — contenu FR rendu en HTML
-    {{LANG_DIVIDER}}     — divider entre FR et EN si bilingue, sinon ""
-    {{CONTENT_EN}}       — contenu EN rendu en HTML, ou "" si mono-langue
+    {{LANG_DIVIDER}}     — divider entre FR et EN si bilingue (bloc <tr> complet), sinon ""
+    {{CONTENT_EN}}       — contenu EN rendu en HTML (paragraphes, listes — pas de <tr>), ou "" si mono-langue
     {{SIGNATURE}}        — bloc signature (équipe + email contact)
-    {{FOOTER_BANNER}}    — bloc HTML du bandeau bas (img ou fallback CSS)
-    {{CONTACT_EMAIL}}    — email contact pour mailto
     {{YEAR}}             — année (ex. 2026)
+  Le footer légal suit directement la signature, dans la même carte blanche,
+  séparé par un trait gris fin : il fait partie de l'email, pas d'un habillage.
 -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,19 +24,12 @@
 <body style="margin:0; padding:0; background-color:#f4f4f4; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; color:#434343;">
 
   <!-- Wrapper full-width -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f4;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" style="background-color:#f4f4f4;">
     <tr>
       <td align="center" style="padding:20px 10px;">
 
         <!-- Container 600px -->
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff;">
-
-          <!-- ============ PREHEADER : view in browser ============ -->
-          <tr>
-            <td align="right" style="padding:12px 20px; font-size:11px; color:#999999;">
-              <a href="{{VIEW_URL}}" style="color:#999999; text-decoration:underline;" target="_blank">View this email in your browser</a>
-            </td>
-          </tr>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="max-width:600px; width:100%; background-color:#ffffff;">
 
           <!-- ============ BANDEAU HAUT ============ -->
           <tr>
@@ -48,7 +40,7 @@
 
           <!-- ============ TITRE + MENTION BILINGUE ============ -->
           <tr>
-            <td align="left" style="padding:30px 30px 10px 30px;">
+            <td align="left" bgcolor="#ffffff" style="padding:30px 30px 10px 30px; background-color:#ffffff;">
               <h1 style="margin:0 0 8px 0; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:26px; font-weight:700; color:#246589; line-height:1.2;">
                 {{TITLE}}
               </h1>
@@ -58,40 +50,39 @@
 
           <!-- ============ CONTENU FR ============ -->
           <tr>
-            <td align="left" style="padding:10px 30px 20px 30px; font-size:16px; line-height:1.55; color:#434343;">
+            <td align="left" bgcolor="#ffffff" style="padding:10px 30px 20px 30px; background-color:#ffffff; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.55; color:#434343;">
               {{CONTENT_FR}}
             </td>
           </tr>
 
-          <!-- ============ DIVIDER FR/EN ============ -->
+          <!-- ============ DIVIDER FR/EN (bloc <tr> complet, ou vide) ============ -->
           {{LANG_DIVIDER}}
 
-          <!-- ============ CONTENU EN (optionnel) ============ -->
-          {{CONTENT_EN}}
+          <!-- ============ CONTENU EN (optionnel — cellule vide si mono-langue) ============ -->
+          <tr>
+            <td align="left" bgcolor="#ffffff" style="padding:0 30px; background-color:#ffffff; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.55; color:#434343;">
+              {{CONTENT_EN}}
+            </td>
+          </tr>
 
           <!-- ============ SIGNATURE ============ -->
           <tr>
-            <td align="left" style="padding:20px 30px 30px 30px; font-size:15px; line-height:1.5; color:#434343;">
+            <td align="left" bgcolor="#ffffff" style="padding:20px 30px 24px 30px; background-color:#ffffff; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:15px; line-height:1.5; color:#434343;">
               {{SIGNATURE}}
             </td>
           </tr>
 
-          <!-- ============ BANDEAU BAS ============ -->
+          <!-- ============ FOOTER LÉGAL (dans la carte, sous un trait gris fin) ============ -->
           <tr>
-            <td align="center" style="padding:0;">
-              {{FOOTER_BANNER}}
-            </td>
-          </tr>
-
-          <!-- ============ FOOTER STANDARD (copyright tout petit, gris clair) ============ -->
-          <tr>
-            <td align="center" style="padding:18px 30px 24px 30px; font-size:10px; color:#bbbbbb; line-height:1.6;">
-              <div style="margin-bottom:3px;">Copyright &copy; {{YEAR}} EPICONCEPT</div>
-              <div style="margin-bottom:6px;">Vous recevez cet email en tant que salari&eacute;&middot;e d'Epiconcept / You are receiving this email as an Epiconcept staff member.</div>
-              <div>Epiconcept &middot; 25, rue Titon &middot; Paris 75011 &middot; France</div>
-              <div style="margin-top:8px;">
-                <a href="mailto:{{CONTACT_EMAIL}}" style="color:#bbbbbb; text-decoration:underline;">{{CONTACT_EMAIL}}</a>
-              </div>
+            <td bgcolor="#ffffff" style="padding:0 30px 24px 30px; background-color:#ffffff;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#ffffff" style="border-top:1px solid #e5e5e5; padding:16px 0 0 0; background-color:#ffffff; font-family:'Source Sans Pro','Segoe UI',Arial,sans-serif; font-size:11px; color:#999999; line-height:1.6;">
+                    <div style="margin-bottom:3px;">Copyright &copy; {{YEAR}} EPICONCEPT</div>
+                    <div>Vous recevez cet email en tant que salari&eacute;&middot;e d'Epiconcept / You are receiving this email as an Epiconcept staff member.</div>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 

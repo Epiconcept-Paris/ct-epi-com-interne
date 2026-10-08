@@ -42,15 +42,57 @@ versionnage selon [Semantic Versioning](https://semver.org/lang/fr/), appliqué 
 
 ## [Non publié]
 
+Incrément **MAJEUR** (prévu en `2.0.0`) : un bloc de la structure verticale est retiré, deux
+placeholders sont supprimés.
+
 ### 🎯 Vue synthétique (pour les utilisateurs)
 
-- **Rien ne change à l'usage.** Le dépôt est réorganisé selon le gabarit commun des dépôts de
-  skills Epiconcept ; la skill elle-même n'est pas modifiée.
+- **Action requise** : réinstaller le `skill.zip` de la release 2.0.0 une fois publiée.
+- **Plus de bandeau turquoise en bas de l'email.** Seul le bandeau du haut reste ; Claude ne
+  pose donc plus que cinq questions de cadrage.
+- **Le footer légal fait désormais partie de la carte, et se réduit à deux lignes** (copyright,
+  mention salarié·e) : l'adresse postale et l'email de contact, déjà présent dans la signature,
+  sont retirés.
+  Il suit directement la signature, sous un trait gris fin, en gris un peu plus lisible : il ne
+  paraît plus détaché de l'email une fois collé dans Gmail.
+- **Plus de lien « View this email in your browser »** en tête d'email : il ne menait nulle part.
+- **En bilingue, la version anglaise s'affiche enfin au bon endroit**, sous le séparateur — elle
+  sortait auparavant au-dessus du bandeau.
+- **Bandeau haut plus fiable** : la méthode d'extraction documentée produisait un bandeau vide ;
+  elle est remplacée par des repères explicites.
 
 ### 📝 Détails techniques (pour les mainteneurs)
 
 <details>
 <summary>Voir les changements</summary>
+
+#### Modifié (gabarit — MAJEUR)
+
+- `skill/assets/template.html` : lignes preheader (`{{VIEW_URL}}`) et bandeau bas
+  (`{{FOOTER_BANNER}}`) supprimées ; adresse postale et lien `{{CONTACT_EMAIL}}` retirés du footer —
+  huit placeholders au lieu de onze ; footer légal dans la
+  carte, sous la signature, `border-top:1px solid #e5e5e5`, 11px `#999999` ; `bgcolor` en
+  attribut sur le conteneur et les cellules ; en-tête de commentaires à jour.
+- `skill/assets/banner-fallback-snippets.html` : bandeau bas et variante image bas supprimés ;
+  repères `<!-- BEGIN:NOM -->` / `<!-- END:NOM -->` autour de `HEADER`, `HEADER_IMG`,
+  `DIVIDER` ; blob du bandeau haut inchangé (vérifié par SHA-1).
+- `skill/SKILL.md` : structure en cinq blocs ; question « bandeau du bas » retirée ; tableau des
+  couleurs, sections bandeau bas et footer, inventaire des logos mis à jour ; `description` :
+  « bandeau bas » → « signature », dispositif d'opt-in inchangé.
+- `skill/references/editorial-patterns.md` : footer 11px `#999999`, position sous la signature.
+
+#### Corrigé
+
+- `{{CONTENT_EN}}` était inséré entre deux `<tr>` sans cellule : le navigateur l'affichait hors
+  du conteneur, au-dessus de l'email. Il a maintenant sa propre `<td>`.
+- L'exemple d'extraction `awk` de `SKILL.md` refermait sa plage sur l'en-tête du snippet et
+  produisait un bandeau vide. Remplacé par `sed -n` sur les repères `BEGIN:` / `END:`, avec arrêt
+  si le bandeau sort vide.
+- Le squelette Python substituait aussi les placeholders cités dans l'en-tête de commentaires du
+  template (bandeau et blob dupliqués dans le commentaire) : l'en-tête est retiré avant
+  substitution, et l'assemblage échoue s'il reste un `{{…}}`.
+- Divergences connues n° 1 (inventaire des logos), n° 2 (taille du footer) et n° 5
+  (`{{VIEW_URL}}` sans archive) résolues — cf. `docs/MAINTENANCE_GABARIT.md`.
 
 #### Ajouté
 
@@ -70,9 +112,24 @@ versionnage selon [Semantic Versioning](https://semver.org/lang/fr/), appliqué 
   (fragments temporaires d'assemblage).
 - Ce `CHANGELOG.md` adopte la structure d'entrée du gabarit (vue synthétique / détails
   techniques) ; le contenu de l'entrée `1.0.0` est inchangé.
-- **Le contenu de `skill/` n'a pas été touché.**
+- Réorganisation du dépôt ci-dessus : sans effet sur `skill/`.
 
 </details>
+
+### 🔄 Compatibilité ascendante
+
+- Les emails déjà produits gardent leur bandeau bas et leur preheader : ils ne sont plus alignés
+  sur le gabarit, mais rien n'est à reprendre.
+- Un assemblage qui fournirait encore `{{VIEW_URL}}`, `{{FOOTER_BANNER}}` ou `{{CONTACT_EMAIL}}` n'a plus d'effet ;
+  `content_en.html` ne doit plus contenir de `<tr>`.
+
+### 🔬 Validé empiriquement
+
+- Emails de test mono-langue et bilingue assemblés selon la nouvelle procédure (extraction par
+  repères, injection, neutralisation de l'en-tête) et inspectés dans un navigateur : tous les
+  blocs dans le conteneur 600px, aucun placeholder résiduel, ni bandeau bas ni preheader.
+  **Non vérifié : le rendu après collage dans Gmail**, ni une exécution réelle de la skill dans
+  Claude AI.
 
 ---
 
