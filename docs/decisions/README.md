@@ -69,6 +69,7 @@ Triées par ID décroissant (le plus récent en haut).
 
 | ID | Titre | Status | Type | Date |
 |---|---|---|---|---|
+| [D-016](D-016-amendement-d003-description-sans-bandeau-bas.md) | Amendement D-003 — description alignée sur la structure sans bandeau bas | accepted | amendement | 2026-10-08 |
 | [D-015](D-015-amendement-d009-turquoise-reserve-au-bandeau-haut.md) | Amendement D-009 — turquoise réservé au seul bandeau haut, footer 11px `#999999` | accepted | amendement | 2026-10-08 |
 | [D-014](D-014-amendement-d005-structure-sans-bandeau-bas.md) | Amendement D-005 — cinq blocs : ni preheader ni bandeau bas, footer rattaché à la signature | accepted | amendement | 2026-10-08 |
 | [D-013](D-013-amendement-d002-alignement-gabarit-de-depot.md) | Amendement D-002 — ADR sous docs/decisions/, dépôt aligné sur le gabarit commun | accepted | amendement | 2026-10-08 |
@@ -81,7 +82,7 @@ Triées par ID décroissant (le plus récent en haut).
 | [D-006](D-006-interrogation-prealable-et-validation-du-brouillon.md) | Interrogation préalable puis validation du brouillon texte : deux points d'arrêt | accepted | cadrage | 2026-09-09 |
 | [D-005](D-005-gabarit-a-placeholders-et-snippets.md) | Gabarit à placeholders et snippets externalisés, structure verticale imposée | amended | cadrage | 2026-09-09 |
 | [D-004](D-004-html-autonome-cible-gmail.md) | Un HTML autonome ciblant Gmail, sans ESP ni dépendance externe | accepted | cadrage | 2026-09-09 |
-| [D-003](D-003-declenchement-opt-in-strict.md) | Déclenchement opt-in strict, avec question préalable | accepted | cadrage | 2026-09-09 |
+| [D-003](D-003-declenchement-opt-in-strict.md) | Déclenchement opt-in strict, avec question préalable | amended | cadrage | 2026-09-09 |
 | [D-002](D-002-convention-adr-et-tracage-retroactif.md) | Adoption de la convention ADR et traçage rétroactif du gabarit | amended | cadrage | 2026-09-09 |
 | [D-001](D-001-mise-sous-depot-de-la-skill.md) | Mise sous dépôt de la skill epi-com-interne, dans son propre dépôt | accepted | cadrage | 2026-09-09 |
 

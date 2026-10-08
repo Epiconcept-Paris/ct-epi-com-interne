@@ -1,11 +1,11 @@
 ---
 id: D-003
 title: "Cadrage — déclenchement opt-in strict, avec question préalable"
-status: accepted
+status: amended
 type: cadrage
 date: 2026-09-09
 supersedes: []
-amended_by: []
+amended_by: [D-016]
 sources:
   - D-002
 patterns:
